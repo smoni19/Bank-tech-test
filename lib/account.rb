@@ -2,7 +2,7 @@
 
 # Class to manage all account functionality
 class Account
-  attr_reader :balance, :transaction_history
+  attr_reader :balance, :transaction_history, :transaction
 
   def initialize
     @balance = 0
@@ -13,6 +13,13 @@ class Account
     @transaction = []
     @balance += credit
     @transaction = "#{date} || #{credit} || || #{balance}"
+    @transaction_history << @transaction
+  end
+
+  def withdraw(debit, date)
+    @transaction = []
+    @balance -= debit
+    @transaction = "#{date} || || #{debit} || #{balance}"
     @transaction_history << @transaction
   end
 end
