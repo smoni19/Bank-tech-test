@@ -10,16 +10,18 @@ class Account
   end
 
   def deposit(credit, date)
-    @transaction = []
     @balance += credit
-    @transaction = "#{date} || #{credit} || || #{balance}"
-    @transaction_history << @transaction
+    date = date.gsub('-','/') 
+    add_to_transaction_history("#{date} || #{credit} || || #{balance}")
   end
 
   def withdraw(debit, date)
-    @transaction = []
     @balance -= debit
-    @transaction = "#{date} || || #{debit} || #{balance}"
-    @transaction_history << @transaction
+    date = date.gsub('-','/') 
+    add_to_transaction_history("#{date} || || #{debit} || #{balance}")
+  end
+
+  def add_to_transaction_history(transaction)
+    @transaction_history << transaction
   end
 end
