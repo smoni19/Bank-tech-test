@@ -1,38 +1,28 @@
 # frozen_string_literal: true
 
-# Class to manage all account functionality
+require_relative 'transaction'
+require_relative 'statement'
+
+# Class to manage account functionality
 class Account
-  attr_reader :balance, :statement, :transaction
+  attr_reader :balance, :account_statement
 
   def initialize
     @balance = 0
-    @statement = []
+    @account_statement = Statement.new
   end
 
-  def deposit(credit, date)
+  def deposit(credit, date = Time.new.strftime('%d/%m/%Y'))
     @balance += credit
-    date = date.gsub('-', '/')
-    add_to_statement("#{date} || #{format('%.2f', credit)} || || #{format('%.2f', balance)}")
+    @account_statement.add_to_statement(Transaction.new(format('%.2f', credit), '', date, format('%.2f', @balance)))
   end
 
-  def withdraw(debit, date)
+  def withdraw(debit, date = Time.new.strftime('%d/%m/%Y'))
     @balance -= debit
-    date = date.gsub('-', '/')
-    add_to_statement("#{date} || || #{format('%.2f', debit)} || #{format('%.2f', balance)}")
+    @account_statement.add_to_statement(Transaction.new('', format('%.2f', debit), date, format('%.2f', @balance)))
   end
 
-  def add_to_statement(transaction)
-    @statement << transaction
-  end
-
-  def print_statement
-    statement_to_print = []
-    @statement.reverse_each do |entry|
-      statement_to_print << entry
-    end
-    puts 'date || credit || debit || balance'
-    statement_to_print.each do |entry|
-      puts entry
-    end
+  def print_account_statement
+    @account_statement.print_statement
   end
 end
