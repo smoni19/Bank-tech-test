@@ -19,7 +19,10 @@ Edge cases:
 - Run bundle install
 - Run IRB
 - Type Require './lib/account.rb
-- See below for how to run interact with the programme.
+- See below for how to interact with the programme.
+
+![Programme running](Programme_running.png)
 
 ### Test coverage
 100% coverage according to SimpleCov
+![SimpleCov result](SimpleCov.png)
