@@ -13,7 +13,6 @@ class Statement
 
   def add_to_statement(transaction)
     @statement << transaction
-    p @statement[0].credit
   end
 
   def print_statement
