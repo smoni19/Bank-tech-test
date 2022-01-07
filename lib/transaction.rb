@@ -1,16 +1,11 @@
-# frozen_string_literal: true
-
 require_relative 'account'
 require_relative 'statement'
 
-# Class to manage transaction functionality
 class Transaction
-  attr_reader :balance, :date, :debit, :credit
+  attr_reader :amount, :date
 
-  def initialize(credit, debit, date, balance)
-    @credit = credit
-    @debit = debit
+  def initialize(amount, date)
+    @amount = amount
     @date = date
-    @balance = balance
   end
 end

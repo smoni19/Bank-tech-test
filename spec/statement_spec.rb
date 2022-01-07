@@ -2,30 +2,29 @@
 
 require 'statement'
 
-describe '#add_to_statement' do
-  before do
-    @account = Account.new
-  end
+describe Statement do
+  let(:deposit_double_1) { double :deposit_double_1, :credit => 1000, :debit => nil, :date => '10-01-2023', :balance => 1000 }
+  let(:deposit_double_2) { double :deposit_double_2, :credit => 2000, :debit => nil, :date => '13-01-2023', :balance => 3000 }
+  let(:withdrawal_double) { double :withdrawal_double, :credit => nil, :debit => 500, :date => '14-01-2023', :balance => 2500 }
 
-  it 'should add deposit and withdrawal information to transcation_history' do
-    @account.deposit(1000, '10-01-2023')
-    expect(@account.account_statement.statement[0].credit).to eq '1000.00'
-  end
-end
+  describe '#print_statement' do
+    before do
+      @statement = Statement.new
+    end
 
-describe '#print_statement' do
-  before do
-    @account = Account.new
-    @account.deposit(1000, '10-01-2023')
-    @account.deposit(2000, '13-01-2023')
-    @account.withdraw(500, '14-01-2023')
+    it 'should return information about all transactions made on the account with headers' do
+      expect(@statement.print_statement).to be
+      ['date || credit || debit || balance',
+      '14/01/2023 || || 500.00 || 2500.00',
+      '13/01/2023 || 2000.00 || || 3000.00',
+      '10/01/2023 || 1000.00 || || 1000.00']
+    end
   end
-
-  it 'should return information about all transactions made on the account with headers' do
-    expect(@account.print_account_statement).to be
-    ['date || credit || debit || balance',
-     '14/01/2023 || || 500.00 || 2500.00',
-     '13/01/2023 || 2000.00 || || 3000.00',
-     '10/01/2023 || 1000.00 || || 1000.00']
+  
+  describe '#convert_to_float' do
+    it 'should take an integer and convert to float with two trailing 0s' do
+      account.deposit(deposit_double_1.credit, deposit_double_1.date)
+      expect(statement.balance).to be_a(Float)
+    end
   end
 end
